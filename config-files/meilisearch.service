@@ -1,0 +1,23 @@
+[Unit]
+Description=Meilisearch Service
+After=network.target
+
+[Service]
+User=meilisearch
+Group=meilisearch
+ExecStart=/usr/local/bin/meilisearch --config-file-path="/etc/meilisearch/config.toml"
+WorkingDirectory=/var/lib/meilisearch
+Restart=always
+StandardOutput=file:/var/log/meilisearch.log
+StandardError=inherit
+
+# Security options
+ProtectSystem=full
+ProtectHome=true
+NoNewPrivileges=true
+PrivateTmp=true
+ReadOnlyPaths=/etc
+ReadWritePaths=/var/lib/meilisearch
+
+[Install]
+WantedBy=multi-user.target
