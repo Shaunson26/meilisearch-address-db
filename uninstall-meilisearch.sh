@@ -13,6 +13,7 @@ DATABASE_PATH="/var/lib/meilisearch"
 CONFIG_PATH="/etc/meilisearch"
 USER="meilisearch"
 SERVICE_FILE="/etc/systemd/system/meilisearch.service"
+NGINX_LOCATION="/etc/nginx/sites-enabled/meilisearch.location"
 
 # Step 1: Stop and remove service
 echo "Stopping Meilisearch service"
@@ -52,5 +53,14 @@ rm $INSTALL_FILE
 if test -f "$INSTALL_FILE"; then
     echo "$INSTALL_FILE not removed ... please check"
 fi
+
+## Step 6: Remove nginx location
+# sudo rm /etc/nginx/sites-enabled/meilisearch.location
+rm $NGINX_LOCATION
+if test -f "$NGINX_LOCATION"; then
+    echo "$NGINX_LOCATION not removed ... please check"
+fi
+
+systemctl restart nginx
 
 echo "Unistallation complete!"

@@ -6,6 +6,9 @@ if [ "$EUID" -ne 0 ]; then
   exit 1
 fi
 
+# Prompt the user key
+read -p "Enter the master key value to be used: " MASTERKEY
+
 # Variables
 MEILISEARCH_BINARY_URL="https://github.com/meilisearch/meilisearch/releases/latest/download/meilisearch-linux-amd64"
 INSTALL_PATH="/usr/local/bin/meilisearch"
@@ -54,6 +57,7 @@ mkdir -p $CONFIG_PATH
 chown $USER:$USER $CONFIG_PATH
 chmod 755 $CONFIG_PATH
 cp config-files/config.toml $CONFIG_PATH
+sed -i "s/MASTER_KEY_VALUE/$MASTERKEY/g" "$CONFIG_PATH/config.toml"
 echo "Configuration folder set up successfully."
 
 # Step 5: Setup system service
@@ -62,12 +66,20 @@ cp  config-files/meilisearch.service /etc/systemd/system/
 systemctl daemon-reload
 systemctl enable meilisearch
 systemctl start meilisearch
+echo "System service set up successfully."
 
-# Step 6
+# Step 6: Fix local files/config
+cp config-files/config-variables.env ./
+sed -i "s/MASTER_KEY_VALUE/12345/g" config-variables.env
 chmod 755 configure-scripts/*.sh
 chmod 755 maintenance-scripts/*.sh
+echo "Setup directory set up successfully."
 
 # Step 7
 cp config-files/meilisearch.location /etc/nginx/sites-enabled/
+systemctl restart nginx
+echo "Nginx location set up successfully."
+
 
 echo "Installation complete!"
+echo "Setup the database by adding data and using the configure scripts ..."
