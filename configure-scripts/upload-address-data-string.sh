@@ -1,6 +1,6 @@
 #!/usr/bin/bash
 
-FILE="data/gnaf-core-nsw.csv"
+FILE="data/gnaf-core-meilisearch.csv"
 
 echo "Expecting files $FILE in this directory"
 echo "Expecting field: id as the primaryKey"

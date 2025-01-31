@@ -8,7 +8,7 @@ if [[ ! -f "$FILE" ]]; then
   exit 1  # Exit the script if file is not found
 fi
 
-source "config-files/config-variables.env"
+source "config-variables.env"
 
 echo $MEILI_HTTP_ADDR
   

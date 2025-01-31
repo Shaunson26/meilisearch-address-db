@@ -10,7 +10,7 @@ if [[ ! -f $FILE ]]; then
   exit 1  # Exit the script if file is not found
 fi
 
-source "config-files/config-variables.env"
+source "config-variables.env"
 
 curl \
   -X POST "http://$MEILI_HTTP_ADDR/indexes/addresses/documents?primaryKey=id" \

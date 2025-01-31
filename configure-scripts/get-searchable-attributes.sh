@@ -1,6 +1,6 @@
 #!/usr/bin/bash
 
-source "config-files/config-variables.env"
+source "config-variables.env"
 
 # Get searchable fields
 curl \

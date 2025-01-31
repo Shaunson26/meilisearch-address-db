@@ -8,10 +8,7 @@ curl \
   -H 'Content-Type: application/json' \
   -H "Authorization: Bearer $MEILI_MASTER_KEY" \
   --data-binary '[
-	"NUMBER_FIRST",
-	"STREET_NAME",
-	"LOCALITY_NAME",
-	"POSTCODE"
+	"ADDRESS_LABEL"
 	]'
 
 echo ""
