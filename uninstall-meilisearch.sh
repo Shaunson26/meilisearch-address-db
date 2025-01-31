@@ -44,7 +44,7 @@ userdel $USER
 #groupdel $USER
 
 # Step 3: Create the database folder
-echo "Remove database folder at '$DATABASE_PATH'..."
+echo "Removing database folder at '$DATABASE_PATH'..."
 rm -r $DATABASE_PATH
 if test -d "$DATABASE_PATH"; then
     echo "$DATABASE_PATH not removed ... please check"
@@ -52,19 +52,21 @@ fi
 
 
 # Step 4: Remove configuration file to etc/meilisearch
+echo "Removing configuration folder at '$CONFIG_PATH'..."
 rm -r $CONFIG_PATH
 if test -d "$CONFIG_PATH"; then
     echo "$CONFIG_PATH not removed ... please check"
 fi
 
 # Step 5: Remove binary system service
+echo "Removing binary at '$INSTALL_FILE'..."
 rm $INSTALL_FILE
 if test -f "$INSTALL_FILE"; then
     echo "$INSTALL_FILE not removed ... please check"
 fi
 
 ## Step 6: Remove nginx location
-# sudo rm /etc/nginx/sites-enabled/meilisearch.location
+echo "Removing Nginx location at '$NGINX_LOCATION'..."
 rm $NGINX_LOCATION
 if test -f "$NGINX_LOCATION"; then
     echo "$NGINX_LOCATION not removed ... please check"
