@@ -9,6 +9,12 @@ fi
 # Prompt the user key
 read -p "Enter the master key value to be used: " MASTERKEY
 
+# Check if input is empty
+if [[ -z "$MASTERKEY" ]]; then
+    echo "Error: No key value provided. Exiting..."
+    exit 1
+fi
+
 # Variables
 MEILISEARCH_BINARY_URL="https://github.com/meilisearch/meilisearch/releases/latest/download/meilisearch-linux-amd64"
 INSTALL_PATH="/usr/local/bin/meilisearch"
