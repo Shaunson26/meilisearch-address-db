@@ -38,7 +38,12 @@ chmod 755 $INSTALL_PATH
 # Step 2: Create the Meilisearch service account
 echo "Creating service account '$USER'..."
 if ! id -u $USER >/dev/null 2>&1; then
-  useradd --system --no-create-home --shell /usr/sbin/nologin $USER
+  if [ $(getent group $USER) ]; then
+    # meilisearch group exists
+	useradd --system --no-create-home --shell /usr/sbin/nologin -g $USER $USER
+  else
+    useradd --system --no-create-home --shell /usr/sbin/nologin $USER
+  fi
   echo "Service account '$USER' created successfully."
 else
   echo "Service account '$USER' already exists."

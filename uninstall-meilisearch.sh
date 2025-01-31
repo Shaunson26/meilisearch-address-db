@@ -14,6 +14,8 @@ CONFIG_PATH="/etc/meilisearch"
 USER="meilisearch"
 SERVICE_FILE="/etc/systemd/system/meilisearch.service"
 NGINX_LOCATION="/etc/nginx/sites-enabled/meilisearch.location"
+LOG_FILE="/var/log/meilisearch.log"
+DATETIME=$(date -d "2013-04-06" "+%s%N" | cut -b1-13)
 
 # Step 1: Stop and remove service
 echo "Stopping Meilisearch service"
@@ -26,6 +28,13 @@ fi
 
 systemctl daemon-reload
 systemctl reset-failed
+
+if test -d "$LOG_FILE"; then
+  LOG_FILE_NEW="/var/log/meilisearch-$DATETIME.log"
+  mv $LOG_FILE $LOG_FILE_NEW
+  echo "Previous logfile copied to $LOG_FILE_NEW"
+fi
+
 
 # Step 2: Remove the Meilisearch service account
 echo "Removing service account '$USER'..."
