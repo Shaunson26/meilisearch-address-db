@@ -1,9 +1,6 @@
 #!/usr/bin/bash
 
-FILE="data/address-columns-nsw-full.csv"
-
-echo "Expecting files $FILE in this directory"
-echo "Expecting field: id as the primaryKey"
+FILE="data/street-suffix-forms.json"
 
 if [[ ! -f $FILE ]]; then
   echo "Error: File $FILE not found!"
@@ -13,9 +10,9 @@ fi
 source "config-variables.env"
 
 curl \
-  -X POST "http://$MEILI_HTTP_ADDR/indexes/addresses/documents?primaryKey=id" \
-  -H 'Content-Type: text/csv' \
+  -X PUT "http://$MEILI_HTTP_ADDR/indexes/addresses2/settings/synonyms" \
+  -H 'Content-Type: application/json' \
   -H "Authorization: Bearer $MEILI_MASTER_KEY" \
   --data-binary @"$FILE"
-
+  
 echo ""
